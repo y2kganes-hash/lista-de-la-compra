@@ -1,0 +1,26 @@
+<DOCTYPE html>
+  <html>
+    <body>
+      <h4>lista de la compra</h4>
+      <p>al escribir en la lista se guarda aunque cierres la pestaña hasta que lo borres</p>
+      <ul id="lista" contenteditable="true">
+  <li>Pan</li>
+  <li>Leche</li>
+  <li>Huevos</li>
+</ul>
+
+<script>
+  const lista = document.getElementById("lista");
+
+  // Cargar la lista guardada si existe
+  if (localStorage.getItem("miLista")) {
+    lista.innerHTML = localStorage.getItem("miLista");
+  }
+
+  // Guardar automáticamente cada vez que se edite
+  lista.addEventListener("input", () => {
+    localStorage.setItem("miLista", lista.innerHTML);
+  });
+</script>
+    </body>
+  </html>

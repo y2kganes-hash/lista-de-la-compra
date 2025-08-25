@@ -1,26 +1,72 @@
-<DOCTYPE html>
-  <html>
-    <body>
-      <h4>lista de la compra</h4>
-      <p>al escribir en la lista se guarda aunque cierres la pestaña hasta que lo borres</p>
-      <ul id="lista" contenteditable="true">
-  <li>Pan</li>
-  <li>Leche</li>
-  <li>Huevos</li>
-</ul>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Compras</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-image: url("fondo.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* letra bonita */
+    }
+    .contenedor {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      max-width: 400px;
+    }
+    h3 {
+      text-align: center;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+    ul {
+      list-style-type: disc; /* puntos por defecto */
+      padding-left: 20px;
+    }
+    li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <h3>🛒 Lista de compras</h3>
+    <ul id="lista" contenteditable="true">
+      <li>Pan</li>
+      <li>Leche</li>
+      <li>Huevos</li>
+    </ul>
+  </div>
 
-<script>
-  const lista = document.getElementById("lista");
+  <script>
+    const lista = document.getElementById("lista");
 
-  // Cargar la lista guardada si existe
-  if (localStorage.getItem("miLista")) {
-    lista.innerHTML = localStorage.getItem("miLista");
-  }
+    // Recuperar lista guardada
+    if (localStorage.getItem("miLista")) {
+      lista.innerHTML = localStorage.getItem("miLista");
+    }
 
-  // Guardar automáticamente cada vez que se edite
-  lista.addEventListener("input", () => {
-    localStorage.setItem("miLista", lista.innerHTML);
-  });
-</script>
-    </body>
-  </html>
+    // Guardar automáticamente en localStorage
+    lista.addEventListener("input", () => {
+      localStorage.setItem("miLista", lista.innerHTML);
+    });
+
+    // Al presionar Enter, crear siempre un <li> nuevo
+    lista.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault(); // evita que se salga del <ul>
+        document.execCommand("insertHTML", false, "<li><br></li>");
+      }
+    });
+  </script>
+</body>
+</html>
